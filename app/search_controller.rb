@@ -1,5 +1,5 @@
 module SearchController
   def self.call()
-    puts 'OK'
+    p 'OK'
   end
 end
