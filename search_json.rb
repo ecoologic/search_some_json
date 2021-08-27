@@ -1,10 +1,3 @@
-require 'rubygems'
-require 'bundler/setup'
-
-Bundler.require(:default)
-
-require 'tty-prompt'
-require './app/search_controller'
-
+require './init'
 
 SearchController.call

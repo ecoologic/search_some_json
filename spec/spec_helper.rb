@@ -100,4 +100,5 @@ RSpec.configure do |config|
 =end
 end
 
+require './init'
 Dir["app/*.rb"].each { |file| require "./#{file}" }
