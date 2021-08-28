@@ -6,8 +6,8 @@ class Input
     @prompt = prompt
   end
 
-  def model
-    @model ||= prompt.select("Select the file to search", MODELS_NAMES, cycle: true).to_sym
+  def model_type
+    @model_type ||= prompt.select("Select the file to search", MODELS_NAMES, cycle: true).to_sym
   end
 
   def field

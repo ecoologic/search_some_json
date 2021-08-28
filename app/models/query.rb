@@ -1,12 +1,12 @@
 class Models::Query
   @@cache = {}
 
-  def initialize(model)
-    @model = model
+  def initialize(model_type)
+    @model_type = model_type
   end
 
   def all
-    @@cache[model] ||= JSON.parse(File.read("./data/#{model}.json"), symbolize_names: true)
+    @@cache[model_type] ||= JSON.parse(File.read("./data/#{model_type}.json"), symbolize_names: true)
   end
 
   def select(field, text)
@@ -23,5 +23,5 @@ class Models::Query
 
   private
 
-  attr_reader :model
+  attr_reader :model_type
 end

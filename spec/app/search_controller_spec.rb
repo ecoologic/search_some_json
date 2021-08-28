@@ -1,5 +1,5 @@
 describe SearchController do
-  let(:input) { double(:input, model: :users, field: :alias, query: 'Mr Ola') }
+  let(:input) { double(:input, model_type: :users, field: :alias, query: 'Mr Ola') }
   describe '.call' do
     describe "when I select a user" do
       it "returns a list of matching users with associated records" do
