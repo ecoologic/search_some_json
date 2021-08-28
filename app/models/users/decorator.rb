@@ -18,7 +18,7 @@ class Models::Users::Decorator
   attr_reader :record
 
   def organization_name
-    Models::Database.find(:organizations, record[:organization_id])
+    Models::Query.find(:organizations, record[:organization_id])
   end
 
   def assigned_tickets

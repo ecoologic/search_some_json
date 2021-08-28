@@ -12,7 +12,6 @@ require 'tty-prompt'
 module Models; end
 module Models::Users; end
 
-require './app/models/database'
 require './app/models/users/decorator'
 require './app/models/query'
 require './app/input'
