@@ -1,5 +1,5 @@
 describe Input do
-  let(:ui) { double(:ui, { select: 'stuff' }) }
+  let(:ui) { double(:ui, select: 'stuff') }
   subject(:input) { described_class.new(ui) }
 
   describe '#model' do

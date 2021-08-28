@@ -10,6 +10,11 @@ module Output
       end
     end
 
-    printable.each { |line| puts line }
+    if printable.any?
+      printable.each { |line| puts line }
+    else
+      puts "No matching record"
+      []
+    end
   end
 end
