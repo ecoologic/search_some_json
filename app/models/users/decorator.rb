@@ -10,7 +10,6 @@ class Models::Users::Decorator
     record
       .merge(organization_name: organization_name)
       .merge(assigned_tickets)
-      # TODO: tags!!!! [name].flatten.join(',')
       # .except(:organization_id) # Only available in Ruby3
   end
 

@@ -6,7 +6,8 @@ module Output
       ["\n"] + record.keys.map do |field|
         space_count = TABLE_COLUMN_SIZE - field.to_s.size
         spaces = ' ' * space_count
-        [field, spaces, record[field]].join
+        value = [record[field]].flatten.join(', ')
+        [field, spaces, value].join
       end
     end
 
