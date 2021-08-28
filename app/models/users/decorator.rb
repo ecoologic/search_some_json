@@ -6,15 +6,15 @@ class Models::Users::Decorator
 
   def call
     record
-      .merge(organisation_name: organisation_name)
-      # .except(:organisation_id) # TODO: ruby3
+      .merge(organization_name: organization_name)
+      # .except(:organization_id) # TODO: ruby3
   end
 
   private
 
   attr_reader :record
 
-  def organisation_name
-    "Multron MOCKED"
+  def organization_name
+    Models::Database.find(:organizations, record[:organization_id])
   end
 end

@@ -2,7 +2,7 @@
 # TODO: Output https://github.com/tj/terminal-table
 # TODO: no results page
 class Input
-  MODELS_NAMES = %w[users tickets organisations] # TODO: extract
+  MODELS_NAMES = %w[users tickets organizations] # TODO: extract
   DEFAULTS = { field: '_id', query: '11' }
 
   def initialize(prompt = TTY::Prompt.new)

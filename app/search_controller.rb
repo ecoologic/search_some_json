@@ -14,6 +14,7 @@ module SearchController
     output.table(decorated_records)
   end
 
+  # TODO: remove?
   def self.decorator_class_for(model)
     DECORATOR_BY_MODEL[model.to_sym]
   end
