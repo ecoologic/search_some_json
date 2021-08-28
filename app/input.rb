@@ -1,6 +1,3 @@
-# TODO: errors everywhere!!!!
-# TODO: Output https://github.com/tj/terminal-table
-# TODO: no results page
 class Input
   MODELS_NAMES = %w[users tickets organizations] # TODO: extract
   DEFAULTS = { field: '_id', query: '11' }
@@ -10,11 +7,11 @@ class Input
   end
 
   def model
-    @model ||= prompt.select("Select the file to search", MODELS_NAMES, cycle: true)
+    @model ||= prompt.select("Select the file to search", MODELS_NAMES, cycle: true).to_sym
   end
 
   def field
-    @field ||= prompt.ask("Enter your search term", default: DEFAULTS[:field])
+    @field ||= prompt.ask("Enter your search term", default: DEFAULTS[:field]).to_sym
   end
 
   def query

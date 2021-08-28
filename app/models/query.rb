@@ -1,13 +1,11 @@
-# TODO? in models?
-class Query
+class Models::Query
   def initialize(model)
     @model = model
   end
 
-  # TODO: select?
-  def where(field, text)
+  def select(field, text)
     Models::Database.all_for(model).select do |record|
-      record[field.to_sym].to_s == text
+      record[field].to_s == text
     end
   end
 

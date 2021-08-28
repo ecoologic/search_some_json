@@ -1,5 +1,7 @@
-# TODO: presenter
+# NOTE: Would be better named Presenter
 class Models::Users::Decorator
+  DISPLAY_FIELD = :name # TODO: or name || subject
+
   def initialize(record)
     @record = record
   end
@@ -7,7 +9,9 @@ class Models::Users::Decorator
   def call
     record
       .merge(organization_name: organization_name)
-      # .except(:organization_id) # TODO: ruby3
+      .merge(assigned_tickets)
+      # TODO: tags!!!! [name].flatten.join(',')
+      # .except(:organization_id) # Only available in Ruby3
   end
 
   private
@@ -16,5 +20,10 @@ class Models::Users::Decorator
 
   def organization_name
     Models::Database.find(:organizations, record[:organization_id])
+  end
+
+  def assigned_tickets
+    # Models::Database.select(:tickets, :assignee_id, 11)
+    {}
   end
 end

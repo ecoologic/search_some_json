@@ -14,7 +14,7 @@ module Models::Users; end
 
 require './app/models/database'
 require './app/models/users/decorator'
-require './app/search_controller'
+require './app/models/query'
 require './app/input'
 require './app/output'
-require './app/query'
+require './app/search_controller'

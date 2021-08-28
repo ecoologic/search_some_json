@@ -5,17 +5,13 @@ module SearchController
   }
 
   def self.call(input = Input.new, output = Output)
-    matching_records = Query.new(input.model)
-      .where(input.field, input.query)
+    matching_records = Models::Query.new(input.model)
+      .select(input.field, input.query)
 
-    decorator_class = decorator_class_for(input.model)
-    decorated_records = matching_records.map { |r| decorator_class.new(r).call }
+    decorated_records = matching_records.map do |record|
+      DECORATOR_BY_MODEL[input.model].new(record).call
+    end
 
     output.table(decorated_records)
-  end
-
-  # TODO: remove?
-  def self.decorator_class_for(model)
-    DECORATOR_BY_MODEL[model.to_sym]
   end
 end

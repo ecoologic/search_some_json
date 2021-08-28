@@ -1,5 +1,5 @@
 describe SearchController do
-  let(:input) { double(:input, model: 'users', field: 'alias', query: 'Mr Ola') }
+  let(:input) { double(:input, model: :users, field: :alias, query: 'Mr Ola') }
   describe '.call' do
     describe "when I select a user" do
       it "returns a list of matching users with their organization name" do
@@ -7,6 +7,7 @@ describe SearchController do
 
         expect(actual.size).to eq(1)
         expect(actual.first.size).to eq(21)
+        # NOTE: Using index might be temperamental
         expect(actual.first[4]).to match(/name\s+Loraine Pittman/i)
         expect(actual.first[20]).to match(/organization_name\s+Enthaze$/)
       end

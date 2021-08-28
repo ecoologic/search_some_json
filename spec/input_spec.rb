@@ -4,7 +4,7 @@ describe Input do
 
   describe '#model' do
     it "prompts a selection" do
-      expect(input.model).to eq('stuff')
+      expect(input.model).to eq(:stuff)
     end
   end
 end
