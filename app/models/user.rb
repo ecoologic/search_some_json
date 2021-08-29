@@ -1,8 +1,4 @@
-class Models::User
-  def initialize(record)
-    @record = record
-  end
-
+class Models::User < Models::Base
   # ars = associated_records
   def decorated_record(ars)
     record
@@ -19,8 +15,4 @@ class Models::User
       tickets: { submitter_id: record[:_id], assignee_id: record[:_id] }
     }
   end
-
-  private
-
-  attr_reader :record
 end

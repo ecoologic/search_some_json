@@ -1,8 +1,4 @@
-class Models::Ticket
-  def initialize(record)
-    @record = record
-  end
-
+class Models::Ticket < Models::Base
   def decorated_record(ars)
     record
       .merge(organization_name:
@@ -18,8 +14,4 @@ class Models::Ticket
       users: { _id: record[:submitter_id], _id: record[:assignee_id] }
     }
   end
-
-  private
-
-  attr_reader :record
 end
