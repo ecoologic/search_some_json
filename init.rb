@@ -11,6 +11,7 @@ require 'tty-prompt'
 
 module Models; end
 
+require './app/error_messages'
 require './app/models/base'
 require './app/models/user'
 require './app/models/organization'

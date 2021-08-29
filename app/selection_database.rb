@@ -58,6 +58,8 @@ class SelectionDatabase
   def model_records_for(model_type)
     @@cache[model_type] ||=
       JSON.parse(File.read("./data/#{model_type}.json"), symbolize_names: true)
-    # TODO: catch
+  rescue => e
+    # Log(e)
+    puts ERROR_MESSAGES[:cannot_load_file]
   end
 end

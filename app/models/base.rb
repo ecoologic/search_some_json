@@ -18,12 +18,17 @@ class Models::Base
   def associated_value(model_records, field:, associated_field:, returning: :name)
     associated = model_records.find { |r| r[associated_field] == record[field] }
     associated[returning]
-    # TODO: catch
+  rescue => e
+    # Log(e)
+    puts ERROR_MESSAGES[:missing_association]
+    N_A
   end
 
   def associated_values(model_records, field:, associated_field:, returning: :name)
     associated = model_records.select { |r| r[associated_field] == record[field] }
     associated.map { |a| a[returning] }
-    # TODO: catch
+  rescue => e
+    puts ERROR_MESSAGES[:missing_association]
+    N_A
   end
 end
