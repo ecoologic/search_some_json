@@ -3,7 +3,8 @@ class SelectionDatabase
 
   # TODO: extract
   MODEL_BY_TYPE = {
-    users: Models::User
+    users: Models::User,
+    organizations: Models::Organization
   }
 
   def initialize(model_type, field, query)

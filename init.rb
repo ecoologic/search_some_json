@@ -13,6 +13,7 @@ module Models; end
 module Models::Users; end
 
 require './app/models/user'
+require './app/models/organization'
 require './app/selection_database'
 require './app/input'
 require './app/output'
