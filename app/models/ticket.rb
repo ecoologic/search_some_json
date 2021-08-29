@@ -18,7 +18,9 @@ class Models::Ticket < Models::Base
   def association_rules
     {
       organizations: [[:_id, record[:organization_id]]],
-      users: [[:_id, record[:submitter_id]], [:_id, record[:assignee_id]]]
+      users: [
+        [:_id, record[:submitter_id]],
+        [:_id, record[:assignee_id]]]
     }
   end
 end

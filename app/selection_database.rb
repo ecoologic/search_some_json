@@ -22,13 +22,8 @@ class SelectionDatabase
   #
   # Below, an example of the values you can find in these loops
   #
-  # association_rules = {
-  #   organizations: { _id: 111 },
-  #   tickets: { submitter_id: 1, assignee_id: 1 }
-  # }
   # model_type = :tickets
-  # model_rules = { submitter_id: 1, assignee_id: 1 }
-  # associated_records = { organizations: [record], tickets: [ticket] }
+  # associated_records = { organizations: [org], tickets: [ticket] }
   # current_records = [record] # all records for the model in the current iteration
   def associated_records
     @associated_records ||= begin
@@ -50,10 +45,12 @@ class SelectionDatabase
   attr_reader :model_type, :field, :query
 
   # Is this record worthy of being cached?
+  # association_rules: *** SEE Models::User ***
   # matching_records = the records we will print in the results
   def association_record?(model_type, possible_record)
     matching_records.each do |matching_record|
-      model_class.new(matching_record).association_rules[model_type].to_a.each do |model_rules|
+      model = model_class.new(matching_record)
+      model.association_rules[model_type].to_a.each do |model_rules|
         model_rules.each do |(field, value)|
           return true if possible_record[field] == value
         end

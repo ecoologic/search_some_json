@@ -19,8 +19,12 @@ class Models::User < Models::Base
 
   def association_rules
     {
+      # I want the organization with the ID of this record
       organizations: [[:_id, record[:organization_id]]],
-      tickets: [[:submitter_id, record[:_id]], [:assignee_id, record[:_id]]]
+      tickets: [
+        # I want the ticket with submitter_id == this record ID
+        [:submitter_id, record[:_id]],
+        [:assignee_id, record[:_id]]]
     }
   end
 end
