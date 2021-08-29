@@ -8,8 +8,8 @@ class Models::Users::Decorator
 
   def call
     record
-      .merge(organization_name: organization_name)
-      .merge(assigned_tickets)
+      # .merge(organization_name: organization_name)
+      # .merge(assigned_tickets)
       # .except(:organization_id) # Only available in Ruby3
   end
 
@@ -17,12 +17,12 @@ class Models::Users::Decorator
 
   attr_reader :record
 
-  def organization_name
-    Models::Query.new(:organizations).find(record[:organization_id])
-  end
+  # def organization_name
+  #   SelectionDatabase.new(:organizations).find(record[:organization_id])
+  # end
 
-  def assigned_tickets
-    # Models::Database.select(:tickets, :assignee_id, 11)
-    {}
-  end
+  # def assigned_tickets
+  #   SelectionDatabase.select(:tickets, :assignee_id, 11)
+  #   {}
+  # end
 end

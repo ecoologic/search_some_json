@@ -5,8 +5,11 @@ module SearchController
   }
 
   def self.call(input = Input.new, output = Output)
-    matching_records = Models::Query.new(input.model_type)
-      .select(input.field, input.query)
+    matching_records = SelectionDatabase.new(
+      input.model_type,
+      input.field,
+      input.query
+    ).decorated_records
 
     decorated_records = matching_records.map do |record|
       MODEL_BY_TYPE[input.model_type].new(record).call

@@ -13,7 +13,7 @@ module Models; end
 module Models::Users; end
 
 require './app/models/users/decorator'
-require './app/models/query'
+require './app/selection_database'
 require './app/input'
 require './app/output'
 require './app/search_controller'
