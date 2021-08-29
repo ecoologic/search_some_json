@@ -4,15 +4,17 @@ class Models::User < Models::Base
       .merge(organization_name: associated_value(
         associated_records[:organizations],
         field: :organization_id,
-        associated_field: :_id,
       ))
       .merge(assigned_ticket_subjects: associated_values(
         associated_records[:tickets],
         associated_field: :assignee_id,
-        field: :_id,
         returning: :subject
       ))
-      # TODO: submitter
+      .merge(submitted_ticket_subjects: associated_values(
+        associated_records[:tickets],
+        associated_field: :submitter_id,
+        returning: :subject
+      ))
   end
 
   def association_rules

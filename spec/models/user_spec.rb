@@ -5,7 +5,10 @@ describe Models::User do
 
       actual = subject.decorated_record({})
 
-      expect(actual).to eq(assigned_ticket_subjects: "N/A", organization_name: "N/A", stuff: true)
+      expect(actual).to eq(assigned_ticket_subjects: "N/A",
+                           organization_name: "N/A",
+                           stuff: true,
+                           submitted_ticket_subjects: "N/A")
     end
   end
 end
