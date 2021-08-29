@@ -1,5 +1,4 @@
 class Input
-  MODELS_NAMES = %w[users tickets organizations] # TODO: extract
   DEFAULTS = { field: '_id', query: '11' }
 
   def initialize(prompt = TTY::Prompt.new)
@@ -7,7 +6,7 @@ class Input
   end
 
   def model_type
-    @model_type ||= prompt.select("Select the file to search", MODELS_NAMES, cycle: true).to_sym
+    @model_type ||= prompt.select("Select the file to search", Models::BY_TYPE.keys, cycle: true).to_sym
   end
 
   def field

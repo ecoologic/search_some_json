@@ -15,7 +15,13 @@ class SelectionDatabase
     end
   end
 
-  # TODO: explain
+  # Return all records, for all model types (files),
+  # that are associated with the records that match your query
+  #
+  # This is done to avoid scanning the potentially big files multiple times
+  #
+  # Below, an example of the values you can find in these loops
+  #
   # association_rules = {
   #   organizations: { _id: 111 },
   #   tickets: { submitter_id: 1, assignee_id: 1 }
@@ -24,19 +30,21 @@ class SelectionDatabase
   # model_rules = { submitter_id: 1, assignee_id: 1 }
   # associated_records = { organizations: [record], tickets: [ticket] }
   def associated_records
-    # TODO: @associated_records ||=
-    result = Hash.new([])
-    matching_records.each do |matching_record|
-      model_class.new(matching_record).association_rules.each do |(model_type, model_rules)|
-        current_records = model_records_for(model_type)
-        result[model_type] += current_records.select do |current_record|
-          model_rules.find do |(field, value)|
-            current_record[field] == value
+    @associated_records ||= begin
+      result = Hash.new([])
+      # TODO: current_records at the top, use Models::BY_TYPE (check unex)
+      matching_records.each do |matching_record|
+        model_class.new(matching_record).association_rules.each do |(model_type, model_rules)|
+          current_records = model_records_for(model_type)
+          result[model_type] += current_records.select do |current_record|
+            model_rules.find do |(field, value)|
+              current_record[field] == value
+            end
           end
         end
       end
+      result
     end
-    result
   end
 
   private

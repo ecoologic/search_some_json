@@ -2,6 +2,7 @@ module Output
   TABLE_COLUMN_SIZE = 30
 
   def self.table(records)
+    puts "\nMatching records:"
     printable = records.map do |record|
       ["\n"] + record.keys.map do |field|
         space_count = TABLE_COLUMN_SIZE - field.to_s.size
