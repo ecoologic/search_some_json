@@ -14,6 +14,7 @@ module Models::Users; end
 
 require './app/models/user'
 require './app/models/organization'
+require './app/models/ticket'
 require './app/selection_database'
 require './app/input'
 require './app/output'
