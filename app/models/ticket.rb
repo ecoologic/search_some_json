@@ -1,9 +1,16 @@
 class Models::Ticket < Models::Base
-  def decorated_record(ars)
+  def decorated_record(associated_records)
     record
-      .merge(organization_name:
-        ars[:organizations].find { |r| r[:_id] == record[:organization_id] }[:name])
-      .merge(assignee_name: ars[:users].find { |r| r[:_id] == record[:assignee_id] }[:name])
+      .merge(organization_name: associated_value(
+        associated_records[:organizations],
+        field: :organization_id,
+        associated_field: :_id,
+      ))
+      .merge(assignee_name: associated_value(
+        associated_records[:users],
+        field: :assignee_id,
+        associated_field: :_id,
+      ))
     # TODO: submitter
   end
 

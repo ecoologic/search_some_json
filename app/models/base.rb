@@ -14,4 +14,11 @@ class Models::Base
   private
 
   attr_reader :record
+
+
+  def associated_value(model_records, field:, associated_field:, returning: :name)
+    associated = model_records.find { |r| r[associated_field] == record[field] }
+    associated[returning]
+    # TODO: catch
+  end
 end
