@@ -23,10 +23,11 @@ describe SearchController do
         actual = described_class.call(input)
 
         expect(actual.size).to eq(1)
-        expect(actual.first.size).to eq(19)
+        expect(actual.first.size).to eq(20)
         expect(actual.first.join("\n")).to match(/^subject\s+A Nuisance in Saint Lucia$/i)
         expect(actual.first.join("\n")).to match(/^organization_name\s+Qualitern$/)
         expect(actual.first.join("\n")).to match(/^assignee_name\s+Shelly Clements$/)
+        expect(actual.first.join("\n")).to match(/^submitter_name\s+Francisca Rasmussen$/)
       end
     end
 

@@ -17,8 +17,8 @@ class Models::User < Models::Base
 
   def association_rules
     {
-      organizations: { _id: record[:organization_id] },
-      tickets: { submitter_id: record[:_id], assignee_id: record[:_id] }
+      organizations: [[:_id, record[:organization_id]]],
+      tickets: [[:submitter_id, record[:_id]], [:assignee_id, record[:_id]]]
     }
   end
 end
