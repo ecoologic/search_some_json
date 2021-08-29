@@ -1,13 +1,6 @@
 class SelectionDatabase
   @@cache = {}
 
-  # TODO: extract
-  MODEL_BY_TYPE = {
-    users: Models::User,
-    organizations: Models::Organization,
-    tickets: Models::Ticket
-  }
-
   def initialize(model_type, field, query)
     @model_type, @field, @query = model_type, field, query
   end
@@ -51,7 +44,7 @@ class SelectionDatabase
   attr_reader :model_type, :field, :query
 
   def model_class
-    MODEL_BY_TYPE[model_type]
+    Models::BY_TYPE[model_type]
   end
 
   def model_records_for(model_type)
