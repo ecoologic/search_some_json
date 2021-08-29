@@ -1,7 +1,7 @@
 module SearchController
   # TODO: extract
   MODEL_BY_TYPE = {
-    users: Models::Users::Decorator
+    users: Models::User
   }
 
   def self.call(input = Input.new, output = Output)
@@ -12,7 +12,7 @@ module SearchController
     ).decorated_records
 
     decorated_records = matching_records.map do |record|
-      MODEL_BY_TYPE[input.model_type].new(record).call
+      MODEL_BY_TYPE[input.model_type].new(record).decorated_record
     end
 
     output.table(decorated_records)
