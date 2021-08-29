@@ -9,10 +9,10 @@ describe SearchController do
         expect(actual.first.size).to eq(22)
         # NOTE: Using index might be temperamental (haven't experienced yet)
         expect(actual.first[4]).to match(/^name\s+Loraine Pittman$/i)
-        expect(actual.first[17]).to match(/^tags\s+Frizzleburg; Forestburg; Sandston; Delco$/)
+        expect(actual.first[17]).to match(/^tags\s+Delco; Forestburg; Frizzleburg; Sandston$/)
         expect(actual.first[20]).to match(/^organization_name\s+Enthaze$/)
         expect(actual.first[21])
-          .to match(/^assigned_ticket_subjects\s+A Drama in Saudi Arabia; A Drama in Botswana; A Drama in Cameroon; A Drama in Gabon$/)
+          .to match(/^assigned_ticket_subjects\s+A Drama in Botswana; A Drama in Cameroon; A Drama in Gabon; A Drama in Saudi Arabia$/)
       end
     end
   end
