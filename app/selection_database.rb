@@ -29,18 +29,16 @@ class SelectionDatabase
   # model_type = :tickets
   # model_rules = { submitter_id: 1, assignee_id: 1 }
   # associated_records = { organizations: [record], tickets: [ticket] }
+  # current_records = [record] # all records for the model in the current iteration
   def associated_records
     @associated_records ||= begin
-      result = Hash.new([])
-      # TODO: current_records at the top, use Models::BY_TYPE (check unex)
-      matching_records.each do |matching_record|
-        model_class.new(matching_record).association_rules.each do |(model_type, model_rules)|
-          current_records = model_records_for(model_type)
-          result[model_type] += current_records.select do |current_record|
-            model_rules.find do |(field, value)|
-              current_record[field] == value
-            end
-          end
+      result = {}
+
+      # For every (current) record in the (current) file
+      Models::BY_TYPE.keys.each do |current_model_type|
+        current_records = model_records_for(current_model_type)
+        result[current_model_type] = current_records.select do |current_record|
+          association_record?(current_model_type, current_record)
         end
       end
       result
@@ -50,6 +48,19 @@ class SelectionDatabase
   private
 
   attr_reader :model_type, :field, :query
+
+  # Is this record worthy of being cached?
+  # matching_records = the records we will print in the results
+  def association_record?(model_type, possible_record)
+    matching_records.each do |matching_record|
+      model_class.new(matching_record).association_rules[model_type].to_a.each do |model_rules|
+        model_rules.each do |(field, value)|
+          return true if possible_record[field] == value
+        end
+      end
+    end
+    false
+  end
 
   def model_class
     Models::BY_TYPE[model_type]
