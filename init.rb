@@ -6,7 +6,7 @@ require 'singleton'
 
 Bundler.require(:default)
 
-require 'pry' # TODO: remove
+# require 'pry'
 require 'tty-prompt'
 
 module Models; end

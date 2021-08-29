@@ -8,7 +8,7 @@ describe SearchController do
 
         expect(actual.size).to eq(1)
         expect(actual.first.size).to eq(22)
-        # NOTE: Using index might be temperamental (haven't experienced yet), also decrease maintainability
+        # NOTE: Using index might be temperamental (haven't experienced yet), also decreases maintainability
         expect(actual.first[4]).to match(/^name\s+Loraine Pittman$/i)
         expect(actual.first[17]).to match(/^tags\s+Delco; Forestburg; Frizzleburg; Sandston$/)
         expect(actual.first[20]).to match(/^organization_name\s+Enthaze$/)
@@ -142,6 +142,4 @@ describe SearchController do
       end
     end
   end
-
-  # TODO: rcov
 end
