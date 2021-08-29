@@ -1,18 +1,14 @@
 module SearchController
-  # TODO: extract
-  MODEL_BY_TYPE = {
-    users: Models::User
-  }
-
   def self.call(input = Input.new, output = Output)
-    matching_records = SelectionDatabase.new(
+    db = SelectionDatabase.new(
       input.model_type,
       input.field,
       input.query
-    ).decorated_records
+    )
 
-    decorated_records = matching_records.map do |record|
-      MODEL_BY_TYPE[input.model_type].new(record).decorated_record
+    decorated_records = db.matching_records.map do |record|
+      SelectionDatabase::MODEL_BY_TYPE[input.model_type]
+        .new(record).decorated_record(db.associated_records)
     end
 
     output.table(decorated_records)
