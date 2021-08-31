@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SearchController
   def self.call(input = Input.new, output = Output)
     db = SelectionDatabase.new(

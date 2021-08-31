@@ -1,2 +1,6 @@
-class Models::Organization < Models::Base
+# frozen_string_literal: true
+
+module Models
+  class Organization < Models::Base
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Models::User do
   describe '#decorated_record' do
     it "returns N/A when associations can't be found" do

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 describe SearchController do
   describe '.call' do
-    describe "when I select a user" do
+    describe 'when I select a user' do
       let(:input) { double(:input, model_type: :users, field: :alias, query: 'Mr Ola') }
 
-      it "returns a list of matching users with associated records" do
+      it 'returns a list of matching users with associated records' do
         actual = described_class.call(input)
 
         expect(actual.size).to eq(1)
@@ -17,10 +19,10 @@ describe SearchController do
       end
     end
 
-    describe "when I select a ticket" do
+    describe 'when I select a ticket' do
       let(:input) { double(:input, model_type: :tickets, field: :assignee_id, query: '11') }
 
-      it "returns a list of matching tickets with associated records" do
+      it 'returns a list of matching tickets with associated records' do
         actual = described_class.call(input)
 
         expect(actual.size).to eq(1)
@@ -32,10 +34,10 @@ describe SearchController do
       end
     end
 
-    describe "when I select an organization" do
+    describe 'when I select an organization' do
       let(:input) { double(:input, model_type: :organizations, field: :_id, query: '103') }
 
-      it "returns a list of matching organizations with associated records" do
+      it 'returns a list of matching organizations with associated records' do
         actual = described_class.call(input)
 
         expect(actual.size).to eq(1)
@@ -45,7 +47,7 @@ describe SearchController do
         expect(actual.first.join("\n")).to match(/^tags\s+Armstrong; Lindsay; Parrish; Vaughn$/)
       end
 
-      it "returns multiple organizations" do
+      it 'returns multiple organizations' do
         input = double(:input, model_type: :users, field: :organization_id, query: '106')
         actual = described_class.call(input)
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SelectionDatabase do
   describe '#all_model_records' do
     it "returns an empty list when the file can't be read" do

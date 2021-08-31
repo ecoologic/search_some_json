@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Output
   TABLE_COLUMN_SIZE = 30
 
@@ -16,7 +18,7 @@ module Output
     if printable.any?
       printable.each { |line| puts line }
     else
-      puts "No matching record"
+      puts 'No matching record'
       []
     end
   end

@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class SelectionDatabase
   def initialize(model_type, field, query)
-    @model_type, @field, @query = model_type, field, query
+    @model_type = model_type
+    @field = field
+    @query = query
   end
 
   def all_model_records
@@ -19,7 +23,7 @@ class SelectionDatabase
       result = {}
 
       # For every (current) record in the (current) file
-      Models::BY_TYPE.keys.each do |current_model_type|
+      Models::BY_TYPE.each_key do |current_model_type|
         current_records = model_records_for(current_model_type)
         current_records.each do |current_record|
           result[current_model_type] ||= {}
@@ -34,6 +38,7 @@ class SelectionDatabase
   # Example: records_for_id(:tickets, :assignee, 1)
   def records_for_id(model_type, relation, id)
     return [] if id.nil?
+
     @reverse_cache[model_type].to_h[relation].to_h[id] || []
   end
 
@@ -67,7 +72,7 @@ class SelectionDatabase
 
   def model_records_for(model_type)
     JSON.parse(File.read("./data/#{model_type}.json"), symbolize_names: true)
-  rescue => e
+  rescue StandardError => e
     # Log(e)
     puts ERROR_MESSAGES[:cannot_load_file]
     []
