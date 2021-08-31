@@ -13,6 +13,7 @@ class SelectionDatabase
     end
   end
 
+  # Example: records_by_id[:organizations][101][:name]
   def records_by_id
     @records_by_id ||= begin
       result = {}
@@ -30,7 +31,7 @@ class SelectionDatabase
     end
   end
 
-  # records_for_id(:tickets, :assignee, 1)
+  # Example: records_for_id(:tickets, :assignee, 1)
   def records_for_id(model_type, relation, id)
     return [] if id.nil?
     @reverse_cache[model_type].to_h[relation].to_h[id] || []
@@ -40,12 +41,14 @@ class SelectionDatabase
 
   attr_reader :model_type, :field, :query
 
+  # Values example:
   # user: { _id: 1 }
   # ticket: { _id: 22, assignee_id: 1 }
   # @reverse_cache: { tickets: { assignee: { 1 => [22] } } }
   # unassigned values: { tickets: { assignee: { nil => [33, 44] } } }
-  # Note: further optimisation could involve
-  #       to the position in the original json, instead of the whole object
+  #
+  # Note: Could be optimised by stoging to the position in the original json, instead of the whole object
+  #       unassigned values could not be stored
   def cache_reverse_associations(foreign_model_type, foreign_record)
     @reverse_cache ||= {}
     @reverse_cache[foreign_model_type] ||= {}
