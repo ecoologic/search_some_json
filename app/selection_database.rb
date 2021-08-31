@@ -1,6 +1,4 @@
 class SelectionDatabase
-  @@cache = {}
-
   def initialize(model_type, field, query)
     @model_type, @field, @query = model_type, field, query
   end
@@ -15,59 +13,60 @@ class SelectionDatabase
     end
   end
 
-  # Return all records, for all model types (files),
-  # that are associated with the records that match your query
-  #
-  # This is done to avoid scanning the potentially big files multiple times
-  #
-  # Below, an example of the values you can find in these loops
-  #
-  # model_type = :tickets
-  # associated_records = { organizations: [org], tickets: [ticket] }
-  # current_records = [record] # all records for the model in the current iteration
-  def associated_records
-    @associated_records ||= begin
+  def records_by_id
+    @records_by_id ||= begin
       result = {}
 
       # For every (current) record in the (current) file
       Models::BY_TYPE.keys.each do |current_model_type|
         current_records = model_records_for(current_model_type)
-        result[current_model_type] = current_records.select do |current_record|
-          association_record?(current_model_type, current_record)
+        current_records.each do |current_record|
+          result[current_model_type] ||= {}
+          result[current_model_type][current_record[:_id]] = current_record
+          cache_reverse_associations(current_model_type, current_record)
         end
       end
       result
     end
   end
 
+  # records_for_id(:tickets, :assignee, 1)
+  def records_for_id(model_type, relation, id)
+    return [] if id.nil?
+    @reverse_cache[model_type].to_h[relation].to_h[id] || []
+  end
+
   private
 
   attr_reader :model_type, :field, :query
 
-  # Is this record worthy of being cached?
-  # association_rules: *** SEE Models::User ***
-  # matching_records = the records we will print in the results
-  def association_record?(model_type, possible_record)
-    matching_records.each do |matching_record|
-      model = model_class.new(matching_record)
-      model.association_rules[model_type].to_a.each do |model_rules|
-        model_rules.each do |(field, value)|
-          return true if possible_record[field] == value
-        end
-      end
-    end
-    false
-  end
+  # user: { _id: 1 }
+  # ticket: { _id: 22, assignee_id: 1 }
+  # @reverse_cache: { tickets: { assignee: { 1 => [22] } } }
+  # unassigned values: { tickets: { assignee: { nil => [33, 44] } } }
+  # Note: further optimisation could involve
+  #       to the position in the original json, instead of the whole object
+  def cache_reverse_associations(foreign_model_type, foreign_record)
+    @reverse_cache ||= {}
+    @reverse_cache[foreign_model_type] ||= {}
 
-  def model_class
-    Models::BY_TYPE[model_type]
+    if foreign_model_type == :tickets
+      @reverse_cache[foreign_model_type][:assignee] ||= {}
+      @reverse_cache[foreign_model_type][:assignee][foreign_record[:assignee_id]] ||= []
+      @reverse_cache[foreign_model_type][:assignee][foreign_record[:assignee_id]] << foreign_record
+
+      @reverse_cache[foreign_model_type] ||= {}
+      @reverse_cache[foreign_model_type][:submitter] ||= {}
+      @reverse_cache[foreign_model_type][:submitter][foreign_record[:submitter_id]] ||= []
+      @reverse_cache[foreign_model_type][:submitter][foreign_record[:submitter_id]] << foreign_record
+    end
   end
 
   def model_records_for(model_type)
-    @@cache[model_type] ||=
-      JSON.parse(File.read("./data/#{model_type}.json"), symbolize_names: true)
+    JSON.parse(File.read("./data/#{model_type}.json"), symbolize_names: true)
   rescue => e
     # Log(e)
     puts ERROR_MESSAGES[:cannot_load_file]
+    []
   end
 end

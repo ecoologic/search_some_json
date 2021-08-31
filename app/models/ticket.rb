@@ -1,26 +1,9 @@
 class Models::Ticket < Models::Base
-  def decorated_record(associated_records)
-    record
-      .merge(organization_name: associated_value(
-        associated_records[:organizations],
-        field: :organization_id,
-      ))
-      .merge(assignee_name: associated_value(
-        associated_records[:users],
-        field: :assignee_id,
-      ))
-      .merge(submitter_name: associated_value(
-        associated_records[:users],
-        field: :submitter_id,
-      ))
-  end
-
-  def association_rules
-    {
-      organizations: [[:_id, record[:organization_id]]],
-      users: [
-        [:_id, record[:submitter_id]],
-        [:_id, record[:assignee_id]]]
-    }
+  def decorated_record(db)
+    record.merge(
+      organization_name: db.records_by_id[:organizations].to_h[record[:organization_id]].to_h[:name],
+      submitter_name: db.records_by_id[:users].to_h[record[:submitter_id]].to_h[:name],
+      assignee_name: db.records_by_id[:users].to_h[record[:assignee_id]].to_h[:name],
+    )
   end
 end

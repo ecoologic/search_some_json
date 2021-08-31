@@ -3,12 +3,12 @@ describe Models::User do
     it "returns N/A when associations can't be found" do
       subject = described_class.new({ stuff: true })
 
-      actual = subject.decorated_record({})
+      actual = subject.decorated_record(SelectionDatabase.new(:users, :_xx, 123))
 
-      expect(actual).to eq(assigned_ticket_subjects: "N/A",
-                           organization_name: "N/A",
+      expect(actual).to eq(organization_name: nil,
                            stuff: true,
-                           submitted_ticket_subjects: "N/A")
+                           assigned_ticket_subjects: [],
+                           submitter_ticket_subjects: [])
     end
   end
 end
