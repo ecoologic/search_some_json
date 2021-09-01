@@ -16,7 +16,7 @@ class Input
   end
 
   def query
-    @query ||= prompt.ask('Enter your search value', default: DEFAULTS[:query])
+    @query ||= prompt.ask('Enter your search value')
   end
 
   private

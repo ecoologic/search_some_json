@@ -47,7 +47,6 @@ class ModelDatabase
   # user1: { _id: 1, ... }
   # ticket22: { _id: 22, assignee_id: 1, ... }
   # @@reverse_cache: { tickets: { assignee: { 1 => [ticket22] } } }
-  # TODO: only store user ids
   def reverse_cache(record)
     if model_type == :tickets
       @@reverse_cache[:tickets] ||= {}
