@@ -10,10 +10,6 @@ module Models
       record
     end
 
-    def association_rules
-      {}
-    end
-
     private
 
     attr_reader :record

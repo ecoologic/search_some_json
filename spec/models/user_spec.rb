@@ -2,7 +2,7 @@
 
 describe Models::User do
   describe '#decorated_record' do
-    it "returns N/A when associations can't be found" do
+    it "returns empty values when associations can't be found" do
       subject = described_class.new({ stuff: true })
 
       actual = subject.decorated_record
