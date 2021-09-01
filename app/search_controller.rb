@@ -11,7 +11,7 @@ module SearchController
     decorated_records = db.matching_records.map do |record|
       Models::BY_TYPE[input.model_type]
         .new(record)
-        .decorated_record(db)
+        .decorated_record
     end
 
     output.table(decorated_records)

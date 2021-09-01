@@ -4,11 +4,10 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'json'
-require 'singleton'
 
 Bundler.require(:default)
 
-# require 'pry'
+require 'pry'
 require 'tty-prompt'
 
 module Models; end

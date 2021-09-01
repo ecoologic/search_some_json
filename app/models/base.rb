@@ -6,7 +6,7 @@ module Models
       @record = record
     end
 
-    def decorated_record(_db)
+    def decorated_record
       record
     end
 

@@ -5,7 +5,7 @@ describe Models::User do
     it "returns N/A when associations can't be found" do
       subject = described_class.new({ stuff: true })
 
-      actual = subject.decorated_record(SelectionDatabase.new(:users, :_xx, 123))
+      actual = subject.decorated_record
 
       expect(actual).to eq(organization_name: nil,
                            stuff: true,
